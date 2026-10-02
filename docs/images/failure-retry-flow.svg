@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560">
+  <defs>
+    <style>
+      .bg{fill:#0d1117}.box{fill:#161b22;stroke:#30363d;stroke-width:2}.ok{stroke:#2ea043}.warn{stroke:#d29922}.bad{stroke:#f85149}
+      .h{fill:#f0f6fc;font:700 20px system-ui,-apple-system,Segoe UI,sans-serif}.t{fill:#c9d1d9;font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+      .small{fill:#8b949e;font:14px system-ui,-apple-system,Segoe UI,sans-serif}.title{fill:#f0f6fc;font:700 28px system-ui,-apple-system,Segoe UI,sans-serif}
+      .arrow{stroke:#8b949e;stroke-width:3;fill:none;marker-end:url(#a)}.green{stroke:#2ea043}.yellow{stroke:#d29922}.red{stroke:#f85149}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="560" rx="24"/>
+  <text class="title" x="50" y="58">What happens when the first coding attempt is not good enough?</text>
+  <text class="small" x="50" y="88">Hermes keeps the workflow moving instead of treating the coding agent's first answer as final.</text>
+
+  <rect class="box" x="55" y="180" width="210" height="125" rx="16"/>
+  <text class="h" x="85" y="225">1. Coding agent</text>
+  <text class="t" x="85" y="260">Implements change</text>
+
+  <rect class="box" x="335" y="180" width="220" height="125" rx="16"/>
+  <text class="h" x="365" y="225">2. Hermes QA</text>
+  <text class="t" x="365" y="260">Tests + verification</text>
+
+  <rect class="box warn" x="635" y="155" width="240" height="175" rx="16"/>
+  <text class="h" x="665" y="205">3. Did it pass?</text>
+  <text class="t" x="665" y="242">Behavior correct?</text>
+  <text class="t" x="665" y="270">Tests green?</text>
+  <text class="t" x="665" y="298">Repo clean?</text>
+
+  <rect class="box bad" x="965" y="70" width="330" height="150" rx="16"/>
+  <text class="h" x="995" y="115">FAIL → send back for repair</text>
+  <text class="t" x="995" y="150">Hermes reports the failing evidence</text>
+  <text class="t" x="995" y="178">and asks the coding agent to fix it</text>
+
+  <rect class="box ok" x="965" y="335" width="330" height="150" rx="16"/>
+  <text class="h" x="995" y="380">PASS → Git workflow</text>
+  <text class="t" x="995" y="415">Commit / push only after verification</text>
+  <text class="t" x="995" y="443">Then report status back on Telegram</text>
+
+  <path class="arrow" d="M265 242 H335"/>
+  <path class="arrow" d="M555 242 H635"/>
+  <path class="arrow red" d="M875 210 C930 210 925 145 965 145"/>
+  <path class="arrow green" d="M875 275 C930 275 925 410 965 410"/>
+  <path class="arrow red" d="M1130 220 C1130 280 470 360 445 305"/>
+  <text class="small" x="915" y="135">FAIL</text>
+  <text class="small" x="915" y="395">PASS</text>
+  <text class="small" x="705" y="400">retry with evidence</text>
+</svg>
