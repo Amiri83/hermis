@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="430" viewBox="0 0 1400 430">
+  <defs>
+    <style>
+      .bg{fill:#0d1117}.box{fill:#161b22;stroke:#30363d;stroke-width:2}.num{fill:#58a6ff;font:700 24px system-ui,-apple-system,Segoe UI,sans-serif}.h{fill:#f0f6fc;font:700 19px system-ui,-apple-system,Segoe UI,sans-serif}.t{fill:#c9d1d9;font:14px system-ui,-apple-system,Segoe UI,sans-serif}.arrow{stroke:#8b949e;stroke-width:3;fill:none;marker-end:url(#a)}.title{fill:#f0f6fc;font:700 28px system-ui,-apple-system,Segoe UI,sans-serif}.small{fill:#8b949e;font:14px system-ui,-apple-system,Segoe UI,sans-serif}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="430" rx="24"/>
+  <text class="title" x="50" y="60">What happens when I send a task</text>
+  <text class="small" x="50" y="90">A lightweight separation of planning, coding, verification and Git operations.</text>
+
+  <g transform="translate(50 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">01</text><text class="h" x="20" y="74">Discuss</text><text class="t" x="20" y="104">Claude + me</text><text class="t" x="20" y="128">shape the task</text>
+  </g>
+  <g transform="translate(270 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">02</text><text class="h" x="20" y="74">Send</text><text class="t" x="20" y="104">Prompt goes to</text><text class="t" x="20" y="128">Hermes via Telegram</text>
+  </g>
+  <g transform="translate(490 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">03</text><text class="h" x="20" y="74">Implement</text><text class="t" x="20" y="104">Claude Code</text><text class="t" x="20" y="128">writes the code</text>
+  </g>
+  <g transform="translate(710 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">04</text><text class="h" x="20" y="74">Verify</text><text class="t" x="20" y="104">Hermes runs QA</text><text class="t" x="20" y="128">and checks results</text>
+  </g>
+  <g transform="translate(930 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">05</text><text class="h" x="20" y="74">Git</text><text class="t" x="20" y="104">Commit + push</text><text class="t" x="20" y="128">only after PASS</text>
+  </g>
+  <g transform="translate(1150 150)">
+    <rect class="box" width="180" height="150" rx="16"/><text class="num" x="20" y="38">06</text><text class="h" x="20" y="74">Report</text><text class="t" x="20" y="104">PASS / FAIL</text><text class="t" x="20" y="128">issues + next</text>
+  </g>
+
+  <path class="arrow" d="M230 225 H270"/><path class="arrow" d="M450 225 H490"/><path class="arrow" d="M670 225 H710"/><path class="arrow" d="M890 225 H930"/><path class="arrow" d="M1110 225 H1150"/>
+</svg>
