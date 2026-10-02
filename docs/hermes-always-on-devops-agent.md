@@ -453,6 +453,185 @@ That turns out to be a much cheaper problem.
 
 ---
 
+
+# 💸 How I keep the running cost under control
+
+The hardware cost is only one part of the story.
+
+What matters more over time is **where I spend model tokens**.
+
+I deliberately do not use my strongest coding model for every tiny orchestration decision.
+
+Hermes mainly needs to do things like:
+
+- inspect the current state
+- decide which tool or agent should run next
+- wait for a result
+- run tests
+- check Git status
+- retry when something fails
+- report back to me
+
+For that layer I use a cheaper model through OpenRouter.
+
+I save Claude Code for the part where the extra intelligence actually matters: **understanding and changing the codebase**.
+
+So the cost model is roughly:
+
+```text
+Cheap model
+    ↓
+orchestration / routing / checking
+
+Expensive coding model
+    ↓
+used only when real coding is required
+```
+
+I also do not need to pay for a cloud VM just to keep the agent online because the Wyse is doing that job at home.
+
+My ongoing cost is therefore mostly whatever I spend on **Claude/Claude Code and OpenRouter usage**, rather than another always-on server bill.
+
+The exact monthly amount will obviously depend on how much work I send through it.
+
+---
+
+# 🔁 What happens when the first attempt fails?
+
+One thing I did not want was this:
+
+```text
+Claude Code says "done"
+        ↓
+Hermes trusts it
+        ↓
+bad code gets pushed
+```
+
+That defeats the point of having an orchestration layer.
+
+My preferred flow looks more like this:
+
+![Hermes failure and retry flow](https://raw.githubusercontent.com/Amiri83/hermis/main/docs/images/failure-retry-flow.svg)
+
+If QA fails, Hermes has evidence it can hand back to the coding agent:
+
+- failing tests
+- command output
+- wrong behavior
+- dirty Git state
+- integration failure
+- missing expected changes
+
+The coding agent gets another chance to fix the actual failure.
+
+Only after Hermes can reproduce a passing result does the workflow move to commit and push.
+
+I find that much more useful than simply asking the coding model:
+
+> "Are you sure it works?"
+
+---
+
+# 🛡️ A few guardrails I use
+
+I want this system to save time, not create a faster way to break things.
+
+So I keep the workflow intentionally conservative.
+
+Some rules I like are:
+
+- **No commit before QA passes.**
+- **No push before the working tree is in the expected state.**
+- **Test the changed behavior, not just whether the code imports.**
+- **Prefer a small targeted regression test first.**
+- **Use the existing full test suite when appropriate before finalizing.**
+- **Report failures instead of hiding or working around them.**
+- **Keep production credentials and private keys outside prompts and public repos.**
+- **Do not let the coding agent silently change unrelated parts of the project.**
+
+For my personal projects, I also try not to turn every small change into a giant enterprise QA exercise.
+
+The goal is enough verification to catch the mistake **without spending more time testing than the original task was worth**.
+
+---
+
+# 🎯 Where this setup works well — and where it doesn't
+
+This setup is a great fit for work that is:
+
+- repetitive
+- repository-based
+- testable
+- scriptable
+- safe to perform from a development machine
+- easy to describe with a clear PASS/FAIL condition
+
+Examples include:
+
+- small internal tools
+- bug fixes
+- repetitive patching utilities
+- CI/CD helper scripts
+- Terraform changes in non-production environments
+- report generators
+- automation around Git and testing
+
+It is **not** something I would blindly point at production and tell:
+
+> "Do whatever you think is best."
+
+For high-risk production changes, security-sensitive operations, destructive database work, or anything with a large blast radius, I still want explicit human review and normal change controls.
+
+The agent is useful because it removes repetitive work.
+
+It does not remove engineering judgment.
+
+---
+
+# 📝 A few things I learned while building it
+
+A few lessons surprised me.
+
+### 1. The orchestration machine does not need to be powerful
+
+At first it is easy to think "AI agent" means "expensive AI hardware."
+
+In this design, it does not.
+
+The thin client mostly needs to stay online, run tools reliably, and have enough storage.
+
+### 2. Separating coding from verification is valuable
+
+Claude Code is very good at coding.
+
+That does not mean I should automatically accept its own definition of "finished."
+
+Having Hermes independently run the checks gives the workflow a much cleaner boundary.
+
+### 3. A short prompt can be better than a huge prompt
+
+Because I discuss the idea first, the prompt I send to Hermes can stay focused.
+
+That reduces noise and makes failures easier to understand.
+
+### 4. Reliability matters more than raw speed
+
+The Wyse is not fast.
+
+But it is always there.
+
+For this use case, **always available + predictable** is more valuable to me than having a much faster machine that disappears when I close my laptop.
+
+### 5. The best automation is the one I actually use
+
+The biggest win is not that the architecture looks clever.
+
+It is that I can send a task from Telegram, walk away, and come back to a tested branch instead of spending another hour doing repetitive setup and Git work.
+
+---
+
+
 # 🔐 A quick security note
 
 Because this machine can execute commands and push code, I treat it like a real development host.
